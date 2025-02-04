@@ -7,7 +7,7 @@ A sentiment analysis project that classifies text as positive, negative, or neut
 ## Contributors
 
 - [Vivek Kumar](https://www.github.com/thefearlesscoder)
-- [Varun Kumar Sahu](https://www.github.com/varun07)
-- [Vivekanand Pandey](https://www.github.com/thefearlesscoder)
-- [Vishal Kumar Gaud](https://www.github.com/thefearlesscoder)
+- [Varun Kumar Sahu](https://www.github.com/varun-07)
+- [Vivekanand Pandey](https://www.github.com/vivekanandpandey27)
+- [Vishal Kumar Gaud](https://www.github.com/vishalkumar-09)
 - [Shreyar M Sherekar](https://www.github.com/thefearlesscoder)
