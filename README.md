@@ -11,3 +11,14 @@ A sentiment analysis project that classifies text as positive, negative, or neut
 - [Vivekanand Pandey](https://www.github.com/vivekanandpandey27)
 - [Vishal Kumar Gaud](https://www.github.com/vishalkumar-09)
 - [Shreyar M Sherekar](https://www.github.com/thefearlesscoder)
+
+## Project SetUp
+
+Set up a virtual evironment
+```bash
+  python -m venv venv
+```
+Activate the virtual environment:
+```bash
+  venv\Scripts\activate
+```
