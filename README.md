@@ -1,8 +1,7 @@
-# Sentiment-Analyzer-
-A sentiment analysis project that classifies text as positive, negative, or neutral using NLP techniques. Supports various datasets and machine learning models for accurate sentiment prediction. 🚀📊
-
-# Dataset
-[Kaggle Link](https://twitter.com/)
+# Next Word Predictor
+A real-time Next Word Prediction model that suggests the most probable next word based on input text. Built using NLP techniques, it enhances typing efficiency and can be integrated into websites or applications. 🚀
+# Datasets Used
+[Kaggle Link]()
 
 ## Contributors
 
