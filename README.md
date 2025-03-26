@@ -33,4 +33,4 @@ source venv/bin/activate
 - [Varun Kumar Sahu](https://www.github.com/varun-07)
 - [Vivekanand Pandey](https://www.github.com/vivekanandpandey27)
 - [Vishal Kumar Gaud](https://www.github.com/vishalkumar-09)
-- [Shreyar M Sherekar](https://www.github.com/thefearlesscoder)
+- [Shreyas M Sherekar](https://www.github.com/Shreyas-Sherekar)
