@@ -4,54 +4,94 @@
     padding: 0;
     text-decoration: none;
     box-sizing: border-box;
-
 }
+
+.heading{
+    display:flex;
+    padding: 2% 2%;
+
+    color: white;
+    background-color: #4d4d4d;
+}
+.body{
+    
+    color: white;
+    background-color: #4d4d4d;
+}
+
 nav{
     display: flex;
-    padding: 2% 2%;
+    padding: 0.5% 0.5%;
     justify-content: space-between;
     align-items: center;
 }
 nav img{
-    width: 80px;
-}
-.output{
-    width: 80%;
-    color: #000000;
-    margin: auto;
-    padding:100px ;
-    text-align: left;
+    width: 50px;
 }
 .input{
-    width: 80%;
-    color: #000000;
-    margin: auto;
-    padding:100px ;
     text-align: left;
+    flex-basis: 50%;
+    padding: 1% 1%;
+    border-radius: 10px;
+    margin-bottom: 25%;
+    box-sizing: border-box;
+    margin-left: 1%;
+    background-color: #6d6d6d;
+    margin-right: 5%;
 }
 .row{
-    margin-top: 5%;
+    margin-top: 0%;
     display: flex;
     justify-content: space-between;
 
 }
 .input-col{
-    flex-basis: 50%;
-    padding: 20px 12px;
-    background: #ffffff;
+    padding:1% 1%;
     border-radius: 10px;
-    margin-bottom: 5%;
+    width:fit-content
+
+}
+
+.output{
+    text-align: left;
+    flex-basis: 50%;
+    padding: 1% 1%;
+    border-radius: 10px;
+    margin-bottom: 25%;
     box-sizing: border-box;
-    
+    margin-left: 1%;
+    background-color: #6d6d6d;
+    margin-right: 5%;
 }
 .output-col{
-    flex-basis: 50%;
-    padding: 20px 12px;
-    background: #ffffff;
+    padding:1% 1%;
     border-radius: 10px;
-    margin-bottom: 5%;
-    box-sizing: border-box;
+    width:fit-content
+
+}
+.input-area {
+    width: 100%; /* Makes the width responsive, you can adjust as needed */
+    height: 300px; /* Adjust height to correspond to 30 rows */
+    background-color: white;
+    border: 1px solid #ccc; /* Adds a border around the textarea */
+    padding: 10px; /* Adds some space inside the textarea */
+    font-size: 16px; /* Sets the font size */
+    resize:both; /* Prevents resizing of the box */
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.output-area {
+    width: 100%; /* Makes the width responsive, you can adjust as needed */
+    height: 300px; /* Adjust height to correspond to 30 rows */
+    background-color: white;
+    border: 1px solid #ccc; /* Adds a border around the textarea */
+    padding: 10px; /* Adds some space inside the textarea */
+    font-size: 16px; /* Sets the font size */
+    resize: both; /* Prevents resizing of the box */
     
+    border-radius: 20px;
+    margin-top: 10px;
 }
 
 
