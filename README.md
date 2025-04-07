@@ -1,7 +1,31 @@
 # Next Word Predictor
 A real-time Next Word Prediction model that suggests the most probable next word based on input text. Built using NLP techniques, it enhances typing efficiency and can be integrated into websites or applications. 🚀
-# Datasets Used
-[Kaggle Link]()
+
+## Datasets Used
+[Medium Articles Dataset](https://www.kaggle.com/datasets/dorianlazar/medium-articles-dataset?select=medium_data.csv)
+
+## Installation
+
+Install the required libraries and packages:
+```bash
+pip install numpy pandas tensorflow colorama termcolor
+```
+
+## Project SetUp
+
+Set up a virtual environment:
+```bash
+python -m venv venv
+```
+
+Activate the virtual environment:
+```bash
+# On Windows
+venv\Scripts\activate
+
+# On macOS/Linux
+source venv/bin/activate
+```
 
 ## Contributors
 
@@ -9,15 +33,4 @@ A real-time Next Word Prediction model that suggests the most probable next word
 - [Varun Kumar Sahu](https://www.github.com/varun-07)
 - [Vivekanand Pandey](https://www.github.com/vivekanandpandey27)
 - [Vishal Kumar Gaud](https://www.github.com/vishalkumar-09)
-- [Shreyar M Sherekar](https://www.github.com/thefearlesscoder)
-
-## Project SetUp
-
-Set up a virtual evironment
-```bash
-  python -m venv venv
-```
-Activate the virtual environment:
-```bash
-  venv\Scripts\activate
-```
+- [Shreyas M Sherekar](https://www.github.com/Shreyas-Sherekar)
