@@ -14,3 +14,26 @@ with open('tokenizer.pickle', 'rb') as handle:
 
 max_sequence_len = 100  # Set the appropriate value
 
+# Define the output function (same as in your notebook)
+def output(text):
+    seed_text = text
+    next_words = 5
+    for _ in range(next_words):
+        token_list = tokenizer.texts_to_sequences([seed_text])[0]
+        token_list = pad_sequences(
+            [token_list], maxlen=max_sequence_len - 1, padding="pre"
+        )
+        predicted = np.argmax(model.predict(token_list), axis=-1)
+        output_word = ""
+        for word, index in tokenizer.word_index.items():
+            if index == predicted:
+                output_word = word
+                break
+        seed_text += " " + output_word
+    return seed_text
+
+# Set up Gradio interface
+interface = gr.Interface(fn=output, inputs="text", outputs="text")
+
+# Launch Gradio interface
+interface.launch()
