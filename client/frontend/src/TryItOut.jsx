@@ -1,35 +1,59 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Chrome } from "lucide-react";
+import { Client } from "@gradio/client";
 
 const TryItOutPage = () => {
   const [text, setText] = useState("");
+  const [prediction, setPrediction] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const predictNextWord = async () => {
+    if (!text.trim()) {
+      setError("Please enter some text first");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      // Connect to your Hugging Face Space
+      const client = await Client.connect("vivekanandpdy732/nextword");
+      
+      // Make prediction using the /predict i am using it after seeing API documentation
+      const result = await client.predict("/predict", {
+        text: text,
+      });
+      
+      setPrediction(result.data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Prediction error:", err);
+      setError("Failed to get prediction. Please try again.");
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-700 via-indigo-700 to-purple-800 text-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-800 text-white px-4 py-10">
       {/* Header */}
-      <header className="text-center py-10">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold"
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          🔮 Try Our Next Word Predictor
-        </motion.h1>
-        <p className="mt-4 text-lg opacity-90">
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-3">🔮 Try Our Next Word Predictor</h1>
+        <p className="text-xl opacity-80">
           Type a sentence and let our model predict what's next!
         </p>
       </header>
 
-      {/* Input Box */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4">
+      {/* Main Content */}
+      <main className="max-w-2xl mx-auto">
         <motion.div
-          className="w-full max-w-xl bg-white/10 backdrop-blur-md rounded-xl p-8 shadow-2xl"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg"
         >
+          {/* Input Box */}
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -41,15 +65,29 @@ const TryItOutPage = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="mt-4 px-6 py-3 bg-white text-indigo-700 font-semibold rounded-full shadow-md hover:shadow-lg transition"
-            onClick={() => alert("Prediction would happen here")}
+            onClick={predictNextWord}
+            disabled={loading}
           >
-            Predict Next Word
+            {loading ? "Predicting..." : "Predict Next Word"}
           </motion.button>
+
+          {/* Error message */}
+          {error && (
+            <p className="mt-3 text-red-300 text-sm">{error}</p>
+          )}
+
+          {/* Prediction result */}
+          {prediction && (
+            <div className="mt-6 p-4 bg-white/20 rounded-lg">
+              <h3 className="text-lg font-semibold mb-2">Prediction:</h3>
+              <p className="text-xl">{prediction}</p>
+            </div>
+          )}
         </motion.div>
       </main>
 
       {/* Footer */}
-      <footer className="text-center py-8 border-t border-white/20 bg-white/10 backdrop-blur-sm">
+      <footer className="text-center py-8 border-t border-white/20 bg-white/10 backdrop-blur-sm mt-12">
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-3">
           <a
             href="https://github.com/thefearlesscoder/NextWord-Predictor"
