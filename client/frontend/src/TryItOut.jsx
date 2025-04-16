@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Chrome } from "lucide-react";
+import { Github, Chrome, ToggleLeft } from "lucide-react";
 import { Client } from "@gradio/client";
 
 const TryItOutPage = () => {
@@ -8,7 +8,8 @@ const TryItOutPage = () => {
   const [prediction, setPrediction] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [modelType, setModelType] = useState("normal"); 
+  
   const predictNextWord = async () => {
     if (!text.trim()) {
       setError("Please enter some text first");
@@ -18,16 +19,34 @@ const TryItOutPage = () => {
     try {
       setLoading(true);
       setError("");
+      let result;
 
-      // Connect to your Hugging Face Space
-      const client = await Client.connect("vivekanandpdy732/nextword");
+      if (modelType === "normal") {
+        // Connect to original Hugging Face Space
+        const client = await Client.connect("vivekanandpdy732/nextword");
+        
+        // Make prediction using the /predict endpoint
+        result = await client.predict("/predict", {
+          text: text,
+        });
+        
+        setPrediction(result.data);
+      } else {
+        // Connection for my other  Transformer model Space
+        const client = await Client.connect("vivekanandpdy732/TransferRoBERTaModel");
+        
+        // For transformer model,  a mask token if not already present
+        let inputText = text;
+        if (!inputText.includes("<mask>")) {
+          inputText = inputText + " <mask>";
+        }
+        
+        // Make prediction using the Transformer model endpoint
+        result = await client.predict("/predict", [inputText]);
+        
+        setPrediction(result.data);
+      }
       
-      // Make prediction using the /predict i am using it after seeing API documentation
-      const result = await client.predict("/predict", {
-        text: text,
-      });
-      
-      setPrediction(result.data);
       setLoading(false);
     } catch (err) {
       console.error("Prediction error:", err);
@@ -40,7 +59,7 @@ const TryItOutPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-800 text-white px-4 py-10">
       {/* Header */}
       <header className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-3">🔮 Try Our Next Word Predictor</h1>
+        <h1 className="text-4xl font-bold mb-3">🔮 Try Our Word Predictor</h1>
         <p className="text-xl opacity-80">
           Type a sentence and let our model predict what's next!
         </p>
@@ -53,11 +72,52 @@ const TryItOutPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg"
         >
+          {/* Model Selection */}
+          <div className="mb-4 bg-white/20 p-3 rounded-lg">
+            <div className="text-lg font-medium mb-2">Select Model:</div>
+            <div className="flex space-x-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="modelType"
+                  value="normal"
+                  checked={modelType === "normal"}
+                  onChange={() => setModelType("normal")}
+                  className="mr-2"
+                />
+                <span>LSTM</span>
+              </label>
+              
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="modelType"
+                  value="transformer"
+                  checked={modelType === "transformer"}
+                  onChange={() => setModelType("transformer")}
+                  className="mr-2"
+                />
+                <span>RoBERTa Masked LM</span>
+              </label>
+            </div>
+          </div>
+          
+          {/* Input Instructions */}
+          <div className="mb-4 text-sm">
+            {modelType === "normal" ? (
+              <p>Type a sentence and we'll predict the next word.</p>
+            ) : (
+              <p>Type a sentence (e.g., "The capital of France is ")</p>
+            )}
+          </div>
+
           {/* Input Box */}
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Start typing here..."
+            placeholder={modelType === "normal" ? 
+              "Start typing here..." : 
+              "Enter text with <mask> token (e.g., 'The capital of France is <mask>.')"}
             className="w-full h-32 p-4 text-lg text-black rounded-md outline-none resize-none"
           />
 
@@ -68,7 +128,7 @@ const TryItOutPage = () => {
             onClick={predictNextWord}
             disabled={loading}
           >
-            {loading ? "Predicting..." : "Predict Next Word"}
+            {loading ? "Predicting..." : modelType === "normal" ? "Predict Next Word" : "Predict Next Word"}
           </motion.button>
 
           {/* Error message */}
@@ -80,7 +140,7 @@ const TryItOutPage = () => {
           {prediction && (
             <div className="mt-6 p-4 bg-white/20 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Prediction:</h3>
-              <p className="text-xl">{prediction}</p>
+              <p className="text-xl whitespace-pre-line">{prediction}</p>
             </div>
           )}
         </motion.div>
